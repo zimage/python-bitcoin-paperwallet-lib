@@ -1,15 +1,9 @@
-import Crypto.Hash.SHA256 as SHA256
-import Crypto.Hash.RIPEMD as RIPEMD160
 import hashlib
 import bitcoin.base58
-
-def hash_160(public_key):
-  h1 = SHA256.new(public_key).digest()
-  h2 = RIPEMD160.new(h1).digest()
-  return h2
+import bitcoin.serialize
 
 def public_key_to_bc_address(public_key):
-  h160 = hash_160(public_key)
+  h160 = bitcoin.serialize.ser_uint160(bitcoin.serialize.Hash160(public_key))
   return encode_base58_check(h160)
 
 def private_key_to_wallet_import_format(private_key):
@@ -17,6 +11,6 @@ def private_key_to_wallet_import_format(private_key):
 
 def encode_base58_check(payload, version="\x00"):
   vh160 = version+payload
-  h3=SHA256.new(SHA256.new(vh160).digest()).digest()
+  h3=bitcoin.serialize.ser_uint256(bitcoin.serialize.Hash(vh160))
   addr=vh160+h3[0:4]
   return bitcoin.base58.encode(addr)
