@@ -12,4 +12,4 @@ requires
 The templates directory contains configuration for the graphics at bitcoinpaperwallet.com and bitcoinonpaper.net
 
 usage:
-python main.py <template-filename> <image-filename>
+python main.py *template-filename* *image-filename*
