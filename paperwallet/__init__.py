@@ -1,0 +1,1 @@
+from paperwallet import PaperWallet
